@@ -1,0 +1,37 @@
+{
+  "name": "ov-cart",
+  "version": "1.0.0",
+  "description": "Universal frontend shopping cart module",
+  "type": "module",
+  "main": "./dist/ov-cart.cjs",
+  "module": "./dist/ov-cart.js",
+  "types": "./dist/src/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/ov-cart.js",
+      "require": "./dist/ov-cart.cjs",
+      "types": "./dist/src/index.d.ts"
+    },
+    "./iife": "./dist/ov-cart.iife.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "start:dev": "vite --config vite.dev.config.ts",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.0",
+    "@babel/preset-env": "^7.29.2",
+    "@rollup/plugin-babel": "^7.0.0",
+    "@tailwindcss/vite": "^4.2.2",
+    "@types/node": "^25.6.0",
+    "tailwindcss": "^4.2.2",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.4",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

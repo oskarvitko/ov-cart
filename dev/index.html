@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ov-cart — dev</title>
+</head>
+
+<body class="mx-auto p-8 max-w-2xl">
+    <h1 class="mb-6 font-bold text-2xl">ov-cart demo</h1>
+
+    <!-- Products -->
+    <div class="flex flex-col gap-4 mb-10">
+        <div class="flex items-center gap-4 p-4 border rounded" data-cart-item="product-1">
+            <img src="https://placehold.co/64x64" alt="" data-cart-item-image="https://placehold.co/64x64"
+                class="rounded" />
+            <div class="grow">
+                <div class="font-medium" data-cart-item-title="self">Greenhouse Standard 3x4m</div>
+                <div class="text-gray-500 text-sm" data-cart-item-description="Polycarbonate 4mm"></div>
+                <span class="hidden" data-cart-item-price="1299"></span>
+                <span class="hidden" data-cart-item-type="greenhouse"></span>
+            </div>
+            <button type="button" data-cart-action="add"
+                class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded text-white">Add to cart</button>
+        </div>
+
+        <div class="flex items-center gap-4 p-4 border rounded" data-cart-item="product-2">
+            <img src="https://placehold.co/64x64" alt="" data-cart-item-image="https://placehold.co/64x64"
+                class="rounded" />
+            <div class="grow">
+                <div class="font-medium" data-cart-item-title="self">Greenhouse Mega 6x4m</div>
+                <div class="text-gray-500 text-sm" data-cart-item-description="Polycarbonate 6mm"></div>
+                <span class="hidden" data-cart-item-price="2499"></span>
+                <span class="hidden" data-cart-item-type="greenhouse"></span>
+            </div>
+            <button type="button" data-cart-action="add"
+                class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded text-white">Add to cart</button>
+        </div>
+
+        <div class="flex items-center gap-4 p-4 border rounded" data-cart-item="product-3">
+            <img src="https://placehold.co/64x64" alt="" data-cart-item-image="https://placehold.co/64x64"
+                class="rounded" />
+            <div class="grow">
+                <div class="font-medium" data-cart-item-title="self">Anchoring Kit</div>
+                <div class="text-gray-500 text-sm" data-cart-item-description="Set of 8"></div>
+                <span class="hidden" data-cart-item-price="49"></span>
+                <span class="hidden" data-cart-item-type="accessories"></span>
+            </div>
+            <button type="button" data-cart-action="add"
+                class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded text-white">Add to cart</button>
+        </div>
+
+        <div class="flex items-center gap-4 p-4 border rounded" data-cart-item="product-4">
+            <img src="https://placehold.co/64x64" alt="" data-cart-item-image="https://placehold.co/64x64"
+                class="rounded" />
+            <div class="grow">
+                <div class="font-medium" data-cart-item-title="self">Delivery</div>
+                <div class="text-gray-500 text-sm" data-cart-item-description=""></div>
+                <span class="hidden" data-cart-item-price="29"></span>
+            </div>
+            <button type="button" data-cart-action="add"
+                class="bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded text-white">Add to cart</button>
+        </div>
+    </div>
+
+    <!-- Cart icon -->
+    <div id="cart-icon"
+        class="top-4 right-4 fixed flex items-center gap-2 bg-indigo-600 shadow-lg px-4 py-2 rounded-full text-white cursor-pointer">
+        🛒
+        <span data-cart-icon-count>0</span>
+        <span data-cart-icon-sum class="opacity-0 transition-opacity duration-500">
+            <span>0</span> $
+        </span>
+    </div>
+
+    <!-- Cart -->
+    <h2 class="mb-3 font-semibold text-xl">Cart</h2>
+    <div id="cart"></div>
+
+    <script type="module" src="./main.ts"></script>
+</body>
+
+</html>
