@@ -5,12 +5,12 @@
   "type": "module",
   "main": "./dist/ov-cart.cjs",
   "module": "./dist/ov-cart.js",
-  "types": "./dist/src/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/ov-cart.js",
       "require": "./dist/ov-cart.cjs",
-      "types": "./dist/src/index.d.ts"
+      "types": "./dist/index.d.ts"
     },
     "./iife": "./dist/ov-cart.iife.js"
   },
