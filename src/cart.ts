@@ -91,13 +91,7 @@ export class Cart {
         initButtons(document, this)
     }
 
-    render(initial = false): void {
-        if (!this.node) return
-
-        const { currency } = this.options
-        const cls = this.classes
-        const { attr } = this
-
+    getState() {
         const totalSum = Object.entries(this.products).reduce(
             (sum, [id, product]) => {
                 const count = this.productsCount[id] ?? 0
@@ -119,7 +113,16 @@ export class Cart {
             isEmpty,
         }
 
+        return state
+    }
+
+    renderIcon(initial = false) {
         if (this.icon) {
+            const cls = this.classes
+            const { attr } = this
+            const state = this.getState()
+            const { isEmpty, totalSum, count } = state
+
             const iconSumEl = this.icon.querySelector(`[${attr('icon-sum')}]`)
             const iconCountEl = this.icon.querySelector(
                 `[${attr('icon-count')}]`,
@@ -148,6 +151,17 @@ export class Cart {
                 }
             }
         }
+    }
+
+    render(initial = false): void {
+        this.renderIcon(initial)
+
+        if (!this.node) return
+
+        const { currency } = this.options
+        const cls = this.classes
+
+        const state = this.getState()
 
         const renderItem =
             this.options.renderItem ?? this._defaultRenderItem.bind(this)
@@ -160,7 +174,7 @@ export class Cart {
             <ul class="${cls.list}">
                 ${itemsHtml}
             </ul>
-            ${renderFooter(totalSum, currency)}
+            ${renderFooter(state.totalSum, currency)}
         `
 
         initButtons(this.node, this)
@@ -171,7 +185,12 @@ export class Cart {
     }
 
     private _buildItemsHtml(
-        renderItem: (id: string, product: CartProduct, count: number, currency: string) => string,
+        renderItem: (
+            id: string,
+            product: CartProduct,
+            count: number,
+            currency: string,
+        ) => string,
         currency: string,
     ): string {
         const { productTypes } = this.options
@@ -191,7 +210,10 @@ export class Cart {
 
         const groups = new Map<string | null, Array<[string, CartProduct]>>()
         for (const [id, product] of activeEntries) {
-            const key = product.type && productTypes[product.type] !== undefined ? product.type : null
+            const key =
+                product.type && productTypes[product.type] !== undefined
+                    ? product.type
+                    : null
             if (!groups.has(key)) groups.set(key, [])
             groups.get(key)!.push([id, product])
         }
