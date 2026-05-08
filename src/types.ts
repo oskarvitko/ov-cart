@@ -18,7 +18,7 @@ export interface CartState {
 }
 
 export interface ActionState extends CartState {
-    id: string
+    id: string | null
 }
 
 export interface CartClasses {

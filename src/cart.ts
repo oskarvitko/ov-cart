@@ -29,7 +29,7 @@ export class Cart {
     private products: Record<string, CartProduct>
     private productsCount: Record<string, number>
     private trigger: Element | null
-    private productId: string
+    private productId: string | null = null
     private node: Element | null
     private icon: Element | null
 
