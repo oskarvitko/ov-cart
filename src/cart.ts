@@ -15,6 +15,7 @@ export type {
     CartClasses,
     CartOptions,
     CartProduct,
+    ActionState,
     CartProductEntry,
     CartState,
     CartText,
@@ -28,6 +29,7 @@ export class Cart {
     private products: Record<string, CartProduct>
     private productsCount: Record<string, number>
     private trigger: Element | null
+    private productId: string
     private node: Element | null
     private icon: Element | null
 
@@ -154,33 +156,34 @@ export class Cart {
     }
 
     render(initial = false): void {
-        this.renderIcon(initial)
-
-        if (!this.node) return
-
-        const { currency } = this.options
-        const cls = this.classes
-
         const state = this.getState()
 
-        const renderItem =
-            this.options.renderItem ?? this._defaultRenderItem.bind(this)
-        const renderFooter =
-            this.options.renderFooter ?? this._defaultRenderFooter.bind(this)
+        if (this.node) {
+            const { currency } = this.options
+            const cls = this.classes
 
-        const itemsHtml = this._buildItemsHtml(renderItem, currency)
+            const renderItem =
+                this.options.renderItem ?? this._defaultRenderItem.bind(this)
+            const renderFooter =
+                this.options.renderFooter ??
+                this._defaultRenderFooter.bind(this)
 
-        this.node.innerHTML = `
+            const itemsHtml = this._buildItemsHtml(renderItem, currency)
+
+            this.node.innerHTML = `
             <ul class="${cls.list}">
                 ${itemsHtml}
             </ul>
             ${renderFooter(state.totalSum, currency)}
         `
 
-        initButtons(this.node, this)
+            initButtons(this.node, this)
+        }
+
+        this.renderIcon(initial)
 
         if (this.options.onUpdate) {
-            this.options.onUpdate(state)
+            this.options.onUpdate({ ...state, id: this.productId })
         }
     }
 
@@ -317,8 +320,18 @@ export class Cart {
         }
     }
 
+    unregister(id: string) {
+        if (id) {
+            delete this.productsCount[id]
+            delete this.products[id]
+
+            this.store()
+        }
+    }
+
     add(id: string, trigger?: Element | null): void {
         this.trigger = trigger ?? null
+        this.productId = id
         this.increase(id)
         this.render()
         this.store()
@@ -326,6 +339,7 @@ export class Cart {
 
     remove(id: string, trigger?: Element | null): void {
         this.trigger = trigger ?? null
+        this.productId = id
         this.decrease(id)
         this.render()
         this.store()
@@ -333,14 +347,17 @@ export class Cart {
 
     clear(id?: string | null, trigger?: Element | null): void {
         this.trigger = trigger ?? null
+
         if (id) {
-            this.productsCount[id] = 0
+            this.unregister(id)
         } else {
             this.products = {}
             this.productsCount = {}
+
+            this.store()
         }
+
         this.render()
-        this.store()
     }
 
     increase(id: string): void {

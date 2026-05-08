@@ -4,6 +4,7 @@ export type {
     CartOptions,
     CartProduct,
     CartState,
+    ActionState,
     CartClasses,
     CartText,
 } from './cart'

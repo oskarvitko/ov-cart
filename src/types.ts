@@ -17,6 +17,10 @@ export interface CartState {
     isEmpty: boolean
 }
 
+export interface ActionState extends CartState {
+    id: string
+}
+
 export interface CartClasses {
     list?: string
     item?: string
@@ -62,7 +66,7 @@ export interface CartOptions {
         currency: string,
     ) => string
     renderFooter?: (total: number, currency: string) => string
-    onUpdate?: (state: CartState) => void
+    onUpdate?: (state: ActionState) => void
     validateCart?: (products: CartProductEntry[]) => CartProductEntry[]
     productTypes?: Record<string, string>
     classes?: CartClasses
@@ -85,7 +89,7 @@ export type ResolvedOptions = {
           ) => string)
         | null
     renderFooter: ((total: number, currency: string) => string) | null
-    onUpdate: ((state: CartState) => void) | null
+    onUpdate: ((state: ActionState) => void) | null
     validateCart: ((products: CartProductEntry[]) => CartProductEntry[]) | null
     productTypes: Record<string, string> | null
     classes: CartClasses
